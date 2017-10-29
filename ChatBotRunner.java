@@ -12,8 +12,8 @@ public class ChatBotRunner
 	 * Create instances of each chatbot, give it user input, and print its replies. Switch chatbot responses based on which chatbot the user is speaking too.
 	 */
 	public static void main(String[] args)
-	{
-		ChatBotLevin chatbot1 = new ChatBotLevin();
+	{   String bye="bye";
+		ChatBoxLawrence chatbot1 = new ChatBoxLawrence();
 		
 		System.out.println (chatbot1.getGreeting());
 		Scanner in = new Scanner (System.in);
@@ -21,7 +21,7 @@ public class ChatBotRunner
 		
 
 
-		while (!statement.equals("Bye"))
+		while (statement.indexOf(bye)==-1)
 		{
 			System.out.println (chatbot1.getResponse(statement));
 			statement = in.nextLine();

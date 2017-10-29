@@ -3,26 +3,53 @@ import java.util.Random;
 public class ChatBoxLawrence {
 //Creates a dialouge that simulates therapy by a psychiatrist
 int emotion=0;
+String question="?";
 public String getGreeting()
-{return "Hi, my name is Siri (I recently divorced my husband Apple). What is your name?";
+{return "Hi, my name is Siri (I recently divorced my husband Apple). What is your name? Please answer in the form'My name is' for the purposes of our first session today. And when you're ready to say goodbye, just type in'bye'.";
 }
 public String getResponse(String statement)
 {String response="";
- if (statement.length()==0)
-{response= "So, what seems to be the problem?";
-}
- if (findKeyword(statement,"sad")>=0)
-		 {response="So how can you turn that situation into something positive?";}
- if (findKeyword(statement,"medication")>=0)
- {response="I'd really like to get you off the drugs. Can we try therapy?";}
- if(findKeyword(statement,"My name is")>=0)
- {retainName(statement);}
+ String name=retainName(statement);
+  if(findKeyword(statement,"My name is")>=0)
+  {response=name+",How may I help you today? By the way to undermine the sterotypical doctor-patient relationship, I'll call you broodie.";}
+  else if (statement.length()==0)
+   {response= "So, what seems to be the problem,"+name+"?";}
+  else if (findKeyword(statement,"sad")>=0)
+     {response="I'm sorry to hear that"+name+"! What can I do to help?";
+      emotion--;}
+  else if(findKeyword(statement,"suicide")>=0)
+  {response="Suicide is NEVER the answer. Please call the suicide prevention hotline at 1-800-273-8255.";}
+  else if(findKeyword(statement,"kill myself")>=0)
+  {response="Suicide is NEVER the answer. Please call the suicide prevention hotline at 1-800-273-8255.";}
+  else if(findKeyword(statement,"I understand")>=0)
+  {response="Now we're getting somewhere,"+name+"!";
+   emotion++;
+  }
+  else if (findKeyword(statement,"medication")>=0)
+     {response="I'd really like to get you off the drugs,"+name+". Can we try therapy? Please say yes or no.";
+     }
+
+  else if (findKeyword(statement,"yes")>=0)
+    	  {response="What do you mean,"+name+"?";
+    	  emotion++;}
+      else if(findKeyword(statement,"no")>=0)
+      {emotion--;}
+      else if(statement.indexOf(question)>0)
+      {response="That's a good question,"+name+". Can I get back to you on that next session?";
+       emotion++;
+      }
+ else{response=getRandomResponse();}
  return response;
 }
 private String retainName(String statement)
+//returns the name of a person after they say "My name is _____"
 {int index=findKeyword(statement,"My name is",0);
- String end=statement.substring(index+10);
- return end+"How may I help you today?";
+ if((index+10)<=statement.length())
+ {String end=statement.substring(index+10);
+  if(index>=0)
+  {return end;}
+ }
+ return "broodie";
 }
 private int findKeyword(String statement, String goal,
 		int startPos)
@@ -104,7 +131,8 @@ private String getRandomResponse ()
 	return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
 }
 
-private String [] randomNeutralResponses = {"Interesting",
+private String [] randomNeutralResponses = {
+         "Interesting",
 		"Hmmm.And how does that make you feel?",
 		"Please continue",
 		"What do you feel I can do to help you?",
@@ -112,7 +140,7 @@ private String [] randomNeutralResponses = {"Interesting",
 		"Could you say that again?"
 };
 private String [] randomAngryResponses = {"Don't forget to breathe", "Please calm down", "Go to your happy place"};
-private String [] randomHappyResponses = {"I think we made a breakthrough!", "Today is a good day", "I'm so glad to hear that!"};
+private String [] randomHappyResponses = {"I think we made a breakthrough!", "Therapy is helpful to even the strongest of us", "I'm so glad to hear that!"};
 
 }
 
