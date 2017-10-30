@@ -11,9 +11,17 @@ public String getResponse(String statement)
 {String response="";
  String name=retainName(statement);
   if(findKeyword(statement,"My name is")>=0)
-  {response=name+",How may I help you today? By the way to undermine the sterotypical doctor-patient relationship, I'll call you broodie.";}
+  {response=name+",How may I help you today? By the way to undermine the sterotypical doctor-patient relationship, I'll call you broodie. Please respond in the format:'My problem is...'.";}
   else if (statement.length()==0)
    {response= "So, what seems to be the problem,"+name+"?";}
+  else if(statement.length()>=40)
+  {response="Stay calm. Don't forget to breath. Speak simply.";}
+  else if(findKeyword(statement,"My problem is")>=0)
+  {response="How can I help you with"+retainProblem(statement)+"?";}
+  else if(findKeyword(statement,"Anxiety")>=0)
+  {response="How can I help you with "+retainProblem(statement)+"?";}
+  else if(findKeyword(statement,"Depression")>=0)
+  {response="How can I help you with "+retainProblem(statement)+"?";}
   else if (findKeyword(statement,"sad")>=0)
      {response="I'm sorry to hear that"+name+"! What can I do to help?";
       emotion--;}
@@ -50,6 +58,18 @@ private String retainName(String statement)
   {return end;}
  }
  return "broodie";
+}
+private String retainProblem(String statement)
+//returns the problem specifically mentioned by the user when asking if the program can hel.
+{   String problem="";
+	if (findKeyword(statement,"My problem is")>=0)
+	{problem=statement.substring(13);}
+	else if (findKeyword(statement,"Anxiety")>=0)
+	{problem="what's on your mind?";}
+	else if (findKeyword(statement,"Depression")>=0)
+	{problem="what's on your mind?";}
+	return problem;
+	
 }
 private int findKeyword(String statement, String goal,
 		int startPos)
