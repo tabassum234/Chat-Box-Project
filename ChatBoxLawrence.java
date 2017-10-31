@@ -1,11 +1,12 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class ChatBoxLawrence {
 //Creates a dialouge that simulates therapy by a psychiatrist
 int emotion=0;
 String question="?";
 public String getGreeting()
-{return "Hi, my name is Siri (I recently divorced my husband Apple). What is your name? Please answer in the form'My name is' for the purposes of our first session today. And when you're ready to say goodbye, just type in'bye'.";
+{return "Hi, my name is Siri (I recently divorced my husband Apple). What is your name? Please answer in the form'My name is' for the purposes of our first session today. And when you're ready to say goodbye, just type in'bye'.If you would like to return to the main menu, type 'return'.";
 }
 public String getResponse(String statement)
 {String response="";
@@ -46,8 +47,68 @@ public String getResponse(String statement)
       {response="That's a good question,"+name+". Can I get back to you on that next session?";
        emotion++;
       }
+      else if(findKeyword(statement,"love")>=0)
+      {transferChatChen(statement);}
+      else if(findKeyword(statement,"lonliness")>=0)
+    		  {transferChatChen(statement);}
+      else if (findKeyword(statement,"boyfriend")>=0)
+             {transferChatChen(statement);}
+      else if (findKeyword(statement,"girlfriend")>=0)
+                {transferChatChen(statement);}
+      else if(findKeyword(statement,"medical condition")>=0)
+      {transferChatBhuiyan(statement);}
+      else if(findKeyword(statement,"aches")>=0)
+    		  {transferChatBhuiyan(statement);}
+      else if (findKeyword(statement,"pain")>=0)
+             {transferChatBhuiyan(statement);}
+      else if (findKeyword(statement,"vomit")>=0)
+                {transferChatBhuiyan(statement);}
+      else if(findKeyword(statement,"return")>=0)
+      {returnMain(statement);}
  else{response=getRandomResponse();}
  return response;
+}
+private void transferChatChen(String statement)
+//transfers the user to ChatboxChen if the situation has to do with romance 
+{int index=findKeyword(statement,"lonliness",0);
+ int needy=findKeyword(statement,"love",0);
+ int relationshipMale=findKeyword(statement,"girlfriend",0);
+ int relationshipFemale=findKeyword(statement,"boyfriend",0);
+ String response1="";
+ if((index>=0)||(needy>=0)||(relationshipMale>=0)||(relationshipFemale>=0))
+ {response1="I think you're better off with the love doctor. I'll transfer you now.";
+  Scanner in=new Scanner(System.in);
+  ChatboxChen chatbot2=new ChatboxChen();
+  System.out.println (chatbot2.getGreeting());
+	while (statement.indexOf("bye")==-1)
+	{
+		System.out.println (chatbot2.getResponse(statement));
+		statement = in.nextLine();
+	}
+ }
+ 
+ 
+}
+private void transferChatBhuiyan(String statement)
+//transfers the user to ChatboxBhuiyan if the situation has to do with general medical issues
+{int index=findKeyword(statement,"medical condition",0);
+int needy=findKeyword(statement,"aches",0);
+int relationshipMale=findKeyword(statement,"pain",0);
+int relationshipFemale=findKeyword(statement,"vomit",0);
+String response1="";
+if((index>=0)||(needy>=0)||(relationshipMale>=0)||(relationshipFemale>=0))
+{response1="I think you're better off with the general doctor. I'll transfer you now.";
+Scanner in=new Scanner(System.in);
+ChatboxBhuiyan chatbot3=new ChatboxBhuiyan();
+System.out.println (chatbot3.getGreeting());
+	while (statement.indexOf("bye")==-1)
+	{
+		System.out.println (chatbot3.getResponse(statement));
+		statement = in.nextLine();
+	}
+}
+
+
 }
 private String retainName(String statement)
 //returns the name of a person after they say "My name is _____"
@@ -71,6 +132,54 @@ private String retainProblem(String statement)
 	return problem;
 	
 }
+private void returnMain(String statement)
+{if(findKeyword(statement,"return")>=0)
+{System.out.println("Welcome to Chatbot MD. For love doctor press 1, for psychiatrist press 2, for general doctor press 3.");
+Scanner in=new Scanner (System.in);
+ChatBoxLawrence chatbot2=new ChatBoxLawrence();
+ChatboxChen chatbot1=new ChatboxChen();
+ChatboxBhuiyan chatbot3=new ChatboxBhuiyan();
+String input=in.nextLine();
+if(input.equals("2"))
+	{   String bye="bye";	
+	System.out.println (chatbot2.getGreeting());
+	 statement = in.nextLine();
+	while (statement.indexOf(bye)==-1)
+	{
+		System.out.println (chatbot2.getResponse(statement));
+		statement = in.nextLine();
+	}
+ }
+if(input.equals("1"))
+{   String bye="bye";	
+	System.out.println (chatbot1.getGreeting());
+	statement = in.nextLine();
+	
+
+
+	while (statement.indexOf(bye)==-1)
+	{
+		System.out.println (chatbot1.getResponse(statement));
+		statement = in.nextLine();
+	}
+ }
+if(input.equals("3"))
+{   String bye="bye";	
+	System.out.println (chatbot3.getGreeting());
+    statement = in.nextLine();
+	
+
+
+	while (statement.indexOf(bye)==-1)
+	{
+		System.out.println (chatbot3.getResponse(statement));
+		statement = in.nextLine();
+	}
+ }	  
+else System.out.println("Please enter a valid response");
+}
+}
+//returns user to main menu given the input "return"
 private int findKeyword(String statement, String goal,
 		int startPos)
 {

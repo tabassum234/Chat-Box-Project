@@ -3,29 +3,29 @@ import java.util.Random;
 public class ChatboxBhuiyan 
 // Dr. GoogleChatbot- takes your symptoms and returns either obvious or exaggerated diagnoses/ medication
 {
-int emotion=0
-String Question=?
+int emotion=0;
+String Question="?";
 	public String getGreeting ()
 	{
-		return "Hi, I'm Dr.Bot, what seems to be the problem?"
+		return "Hi, I'm Dr.Bot, what seems to be the problem?";
 	}
 	public String getResponse(String statement) 
 	{
 	String response = "";
-	if (statement.length == 0)
-		response = "I can't help you if you don't want to help yourself."
+	if (statement.length() == 0)
+		response = "I can't help you if you don't want to help yourself.";
 	else if (findKeyword(statement, "hurts")>=0)
-		response = "How long has it hurt?"
+		response = "How long has it hurt?";
 	else if (findKeyword(statement, "pain")>=0)
-		response = "Have you tried ice?"
+		response = "Have you tried ice?";
 	else if (findKeyword(statement, "bleed")>=0)
-		response = "I'll get you a bandaid."
+		response = "I'll get you a bandaid.";
 	else if (findKeyword(statement, "ache")>=0)
-		reponse = "Take some asperin."
+		response = "Take some asperin.";
 	else if (findKeyword(statement, "feel")>=0)
-		response = "It's cancer. You have 6 months to live"
+		response = "It's cancer. You have 6 months to live";
 	else if ((findKeyword(statement, "threw up")>=0) || (findKeyword(statement, "vomit")>=0) || (findKeyword(statement, "throwing up")>=0))
-		response = "You're pregnant."
+		response = "You're pregnant.";
 	else{response=getRandomResponse();}
 	return response;
 }

@@ -10,9 +10,9 @@ public class ChatboxChen {
 		if (statement.length() ==0)
 			response = "Now you're making ME feel lonely.";
 		else if (findKeyword(statement, "My name is")>=0)
-			response = "Hi"+ name+ ", what's poppin?";
+			{response = "Hi"+ statement.substring(10)+ ", what's poppin?";}
 			else if (findKeyword(statement, "help ")>=0)
-				response = "Of course" +name+". That's why you're here, that's why I'm here.";
+				response = "Of course" +statement.substring(10)+". That's why you're here, that's why I'm here.";
 			else if (findKeyword(statement, "Why")>=0||(findKeyword(statement, "why")>=0))
 				response = "Sounds like you're having an existential crisis. Let loose!";
 			else if (findKeyword(statement, "I need")>=0)
