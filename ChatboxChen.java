@@ -3,30 +3,30 @@ import java.util.Random;
 public class ChatboxChen {
 
 	public String getGreeting() {
-		return "Hey, I'm your relationship bot, here to curb your lonliness. What's poppin b?";
+		return "Hey, I'm your relationship bot, here to curb your lonliness. What's your name?";
 	}
 	public String getResponse(String statement) {
 		String response = "";
 		if (statement.length() ==0)
 			response = "Now you're making ME feel lonely.";
-		
-			else if (findKeyword(statement, "My name is")>=0)	
-				response = "Let's shorten that to"; //+ name + ".";
-		//how to create name method??
-			else if (findKeyword(statement, "help.")>=0)
-				response = "Of course you want help. That's why you're here, that's why I'm here.";
+		else if (findKeyword(statement, "My name is")>=0)
+			response = "Hi"+ name+ ", what's poppin?";
+			else if (findKeyword(statement, "help ")>=0)
+				response = "Of course" +name+". That's why you're here, that's why I'm here.";
 			else if (findKeyword(statement, "Why")>=0||(findKeyword(statement, "why")>=0))
 				response = "Sounds like you're having an existential crisis. Let loose!";
 			else if (findKeyword(statement, "I need")>=0)
 				response = "I think the right word is 'want', not need.";
 			else if (statement.length()>100)
-				response = "Woah, that's a lot to take in. How about we break it down?";
+				response = "Woah, slow down, that's a lot to take in.";
+			else if (findKeyword(statement, "die")>=0)
+				response = "This may not be the right bot for you.";
 			//else random response
 						
 						
 		return response;
 	}
-
+			
 	
 	private int findKeyword(String statement, String goal, int startPos) {
 		String phrase = statement.trim().toLowerCase();
@@ -69,5 +69,21 @@ public class ChatboxChen {
 	private int findKeyword(String statement, String goal) {
 		return findKeyword (statement, goal, 0);
 	}
+	private String getRandomResponse ()
+	{
+		Random r = new Random ();
+		{	
+			return randomResponses [r.nextInt(randomResponses.length)];
+		}
+	}
+	private String [] randomResponses = {"Uh oh.",
+			"Communication is key!",
+			"Do you really think so?",
+			"Of all things, why that?",
+			"Aw jeez.",
+			"Go for it.",
+			"<3",
+			"</3"
+			} ;
 }
 
