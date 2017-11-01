@@ -3,30 +3,94 @@ import java.util.Random;
 public class ChatboxChen {
 
 	public String getGreeting() {
-		return "Hey, I'm your relationship bot, here to curb your lonliness. What's your name?";
+		return "Hey, I'm the love doctor, here to help with heartache. What's your name? [My name is...]";
 	}
 	public String getResponse(String statement) {
 		String response = "";
 		if (statement.length() ==0)
 			response = "Now you're making ME feel lonely.";
-		else if (findKeyword(statement, "My name is")>=0)
+			
+			else if (findKeyword(statement, "My name is")>=0)
 			{response = "Hi"+ statement.substring(10)+ ", what's poppin?";}
-			else if (findKeyword(statement, "help ")>=0)
-				response = "Of course" +statement.substring(10)+". That's why you're here, that's why I'm here.";
-			else if (findKeyword(statement, "Why")>=0||(findKeyword(statement, "why")>=0))
-				response = "Sounds like you're having an existential crisis. Let loose!";
+		
+			else if (findKeyword(statement, "help")>=0)
+				response = getRandomHelp();
+
+			else if (findKeyword(statement, "Why")>=0)
+				response = "Sounds like you're having an existential crisis.";
+		
 			else if (findKeyword(statement, "I need")>=0)
 				response = "I think the right word is 'want', not need.";
+		
+			else if (findKeyword(statement, "I want")>=0)
+				response = transformIWant(statement);
+		
 			else if (statement.length()>100)
 				response = "Woah, slow down, that's a lot to take in.";
-			else if (findKeyword(statement, "die")>=0)
-				response = "This may not be the right bot for you.";
-			//else random response
-						
+		
+			else if (findKeyword(statement, "die")>=0||findKeyword(statement, "kill")>=0)
+				response = "Maybe you should try the psychiatrist bot.";
+			
+			else if (findKeyword(statement, "Should I")>=0)
+				response = shouldIDo(statement);
+		
+			else if(findKeyword(statement, "thank")>=0||findKeyword(statement, "love you")>=0)
+				response = "<3";
+			
+			else if (findKeyword(statement, "hate")>=0)
+				response = hateIsStrong(statement);
+			
+			else if (findKeyword(statement, "?")>=0)
+				response = "...yes.";
+			
+			else if (findKeyword(statement, "hurt")>=0)
+				response = hurtOuch(statement);
+				
+			else response = getRandomResponse();			
 						
 		return response;
 	}
-			
+	
+	private String hurtOuch(String statement) {
+		if (findKeyword(statement, "hurt me")>=0)
+			statement = "Get away from " + statement.substring(0, statement.length()-8) + ". Maybe call the ops.";
+			else statement = "Be lonely and happy, not taken and sad.";
+		return statement;
+	}
+	
+	private String shouldIDo(String statement) {
+		statement = statement.trim();
+		if (findKeyword(statement, "break")>=0)
+			statement= "Break it up b, plenty of other fish in the sea.";
+		if (statement.length()==8)
+			statement = "Should you?";
+		else return "If your heart says yes, then I say yes.";
+		return statement;
+	}
+	
+	private String hateIsStrong(String statement) {
+		if(findKeyword(statement, "hate you")>=0)
+			statement= ":(";
+		else return "Why do you "+ statement.substring(2);
+		return statement;
+	}
+	
+	private String transformIWant(String statement)
+	{
+		//  Remove the final period, if there is one
+		statement = statement.trim();
+		String lastChar = statement.substring(statement
+				.length() - 1);
+		if (lastChar.equals("."))
+		{
+			statement = statement.substring(0, statement
+					.length() - 1);
+		}
+		int psn = findKeyword (statement, "I want", 0);
+		String restOfStatement = statement.substring(psn + 6).trim();
+		return "Why do you want " + restOfStatement + "?";
+
+	}
 	
 	private int findKeyword(String statement, String goal, int startPos) {
 		String phrase = statement.trim().toLowerCase();
@@ -69,6 +133,17 @@ public class ChatboxChen {
 	private int findKeyword(String statement, String goal) {
 		return findKeyword (statement, goal, 0);
 	}
+	
+	//Start of randomHelp
+	private String getRandomHelp() {
+		Random h= new Random(); {
+			return randomHelp [h.nextInt(randomHelp.length)];
+		}
+	}
+	
+	private String [] randomHelp = { "Help me help you. Say more!",
+			"I can help with that for the low price of a 'should I'statement."} ;
+	
 	private String getRandomResponse ()
 	{
 		Random r = new Random ();
@@ -76,14 +151,18 @@ public class ChatboxChen {
 			return randomResponses [r.nextInt(randomResponses.length)];
 		}
 	}
+	
+	//End of randomHelp
+	
 	private String [] randomResponses = {"Uh oh.",
-			"Communication is key!",
-			"Do you really think so?",
+			"Communication is key.",
+			"Really?",
 			"Of all things, why that?",
 			"Aw jeez.",
-			"Go for it.",
-			"<3",
-			"</3"
+			"</3 ?",
+			"Sounds like you're having an existential crisis.",
+			"Give me MORE JUICE!",
+			"Sounds spicy, tell me more."
 			} ;
 }
 
