@@ -21,11 +21,13 @@ String Question="?";
 	else if (findKeyword(statement, "bleed")>=0)
 		response = "I'll get you a bandaid.";
 	else if (findKeyword(statement, "ache")>=0)
-		response = "Take some asperin.";
+		response = "Take asperin.";
 	else if (findKeyword(statement, "feel")>=0)
-		response = "It's cancer. You have 6 months to live";
-	else if ((findKeyword(statement, "threw up")>=0) || (findKeyword(statement, "vomit")>=0) || (findKeyword(statement, "throwing up")>=0))
+		response = "It's cancer. You have 6 months to live.";
+	else if ((findKeyword(statement, "threw up")>=0)) 
 		response = "You're pregnant.";
+	else if ((findKeyword(statement, "days")>=0)) 
+		response = "It might be too late for you.";
 	else{response=getRandomResponse();}
 	return response;
 }
