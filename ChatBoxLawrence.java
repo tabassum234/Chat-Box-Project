@@ -15,6 +15,8 @@ public String getResponse(String statement)
   {response=name+",How may I help you today? By the way to undermine the sterotypical doctor-patient relationship, I'll call you broodie. Please respond in the format:'My problem is...'.";}
   else if (statement.length()==0)
    {response= "So, what seems to be the problem,"+name+"?";}
+  else if(findKeyword(statement,"I feel")>=0)
+  {transformIFeel(statement);}
   else if(statement.length()>=40)
   {response="Stay calm. Don't forget to breath. Speak simply.";}
   else if(findKeyword(statement,"My problem is")>=0)
@@ -78,11 +80,11 @@ private void transferChatChen(String statement)
  if((index>=0)||(needy>=0)||(relationshipMale>=0)||(relationshipFemale>=0))
  {response1="I think you're better off with the love doctor. I'll transfer you now.";
   Scanner in=new Scanner(System.in);
-  ChatboxChen chatbot2=new ChatboxChen();
-  System.out.println (chatbot2.getGreeting());
+  ChatboxChen chatbot1=new ChatboxChen();
+  System.out.println (chatbot1.getGreeting());
 	while (statement.indexOf("bye")==-1)
 	{
-		System.out.println (chatbot2.getResponse(statement));
+		System.out.println (chatbot1.getResponse(statement));
 		statement = in.nextLine();
 	}
  }
@@ -121,7 +123,7 @@ private String retainName(String statement)
  return "broodie";
 }
 private String retainProblem(String statement)
-//returns the problem specifically mentioned by the user when asking if the program can hel.
+//returns the problem specifically mentioned by the user when asking if the program can help.
 {   String problem="";
 	if (findKeyword(statement,"My problem is")>=0)
 	{problem=statement.substring(13);}
@@ -129,10 +131,27 @@ private String retainProblem(String statement)
 	{problem="what's on your mind?";}
 	else if (findKeyword(statement,"Depression")>=0)
 	{problem="what's on your mind?";}
+	else if (findKeyword(statement,"love")>=0)
+	{transferChatChen(statement);}
+	else if (findKeyword(statement,"lonliness")>=0)
+	{transferChatChen(statement);}
+	else if (findKeyword(statement,"boyfriend")>=0)
+	{transferChatChen(statement);}
+	else if (findKeyword(statement,"girlfriend")>=0)
+	{transferChatChen(statement);}
+	 else if(findKeyword(statement,"medical condition")>=0)
+     {transferChatBhuiyan(statement);}
+     else if(findKeyword(statement,"aches")>=0)
+   		  {transferChatBhuiyan(statement);}
+     else if (findKeyword(statement,"pain")>=0)
+            {transferChatBhuiyan(statement);}
+     else if (findKeyword(statement,"vomit")>=0)
+               {transferChatBhuiyan(statement);}
 	return problem;
 	
 }
 private void returnMain(String statement)
+//returns user to main menu given the input "return"
 {if(findKeyword(statement,"return")>=0)
 {System.out.println("Welcome to Chatbot MD. For love doctor press 1, for psychiatrist press 2, for general doctor press 3.");
 Scanner in=new Scanner (System.in);
@@ -179,7 +198,20 @@ if(input.equals("3"))
 else System.out.println("Please enter a valid response");
 }
 }
-//returns user to main menu given the input "return"
+private String transformIFeel(String statement)
+{String response="";
+   if ((findKeyword(statement,"I feel")>=0)&&(statement.indexOf("I feel")!=statement.length()-5))
+  {int x=statement.indexOf("I feel");
+ response="Why do you feel"+statement.substring(x+7)+"?"; 
+  }
+   else if ((findKeyword(statement,"I feel")>=0)&&(statement.indexOf("I feel")==statement.length()-5))
+  {
+   response="Why do you feel that way?";
+  }
+  return response;
+}
+
+
 private int findKeyword(String statement, String goal,
 		int startPos)
 {
