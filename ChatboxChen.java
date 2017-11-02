@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class ChatboxChen {
 
@@ -28,8 +29,14 @@ public class ChatboxChen {
 			else if (statement.length()>100)
 				response = "Woah, slow down, that's a lot to take in.";
 		
-			else if (findKeyword(statement, "die")>=0||findKeyword(statement, "kill")>=0)
-				response = "Maybe you should try the psychiatrist bot.";
+			else if (findKeyword(statement, "die")>=0||findKeyword(statement, "kill")>=0||
+					findKeyword(statement,"depression")>=0||findKeyword(statement,"suicide")>=0||findKeyword(statement,"anxiety")>=0
+					||findKeyword(statement, "therapy")>=0)
+				response = "Try the psychiatrist bot. Enter 'return' to return to the main menu.";
+		
+			else if(findKeyword(statement, "vomit")>=0||findKeyword(statement, "puke")>=0||findKeyword(statement, "throw up")>=0
+					||findKeyword(statement, "sick")>=0||findKeyword(statement, "injured")>=0||findKeyword(statement, "doctor")>=0)
+				response = "Try Dr.Bot. Enter 'return' to return to the main menu.";
 			
 			else if (findKeyword(statement, "Should I")>=0)
 				response = shouldIDo(statement);
@@ -46,6 +53,9 @@ public class ChatboxChen {
 			else if (findKeyword(statement, "hurt")>=0)
 				response = hurtOuch(statement);
 				
+			else if(findKeyword(statement,"return")>=0)
+		      {returnMain(statement);}
+		
 			else response = getRandomResponse();			
 						
 		return response;
@@ -53,7 +63,7 @@ public class ChatboxChen {
 	
 	private String hurtOuch(String statement) {
 		if (findKeyword(statement, "hurt me")>=0)
-			statement = "Get away from " + statement.substring(0, statement.length()-8) + ". Maybe call the ops.";
+			statement = "Leave " + statement.substring(0, statement.length()-8) + " quickly! ";
 			else statement = "Be lonely and happy, not taken and sad.";
 		return statement;
 	}
@@ -164,5 +174,54 @@ public class ChatboxChen {
 			"Give me MORE JUICE!",
 			"Sounds spicy, tell me more."
 			} ;
+	
+	private void returnMain(String statement)
+	{if(findKeyword(statement,"return")>=0)
+	{System.out.println("Welcome to Chatbot MD. For love doctor press 1, for psychiatrist press 2, for general doctor press 3.");
+	Scanner in=new Scanner (System.in);
+	ChatBoxLawrence chatbot2=new ChatBoxLawrence();
+	ChatboxChen chatbot1=new ChatboxChen();
+	ChatboxBhuiyan chatbot3=new ChatboxBhuiyan();
+	String input=in.nextLine();
+	if(input.equals("2"))
+		{   String bye="bye";	
+		System.out.println (chatbot2.getGreeting());
+		 statement = in.nextLine();
+		while (statement.indexOf(bye)==-1)
+		{
+			System.out.println (chatbot2.getResponse(statement));
+			statement = in.nextLine();
+		}
+	 }
+	if(input.equals("1"))
+	{   String bye="bye";	
+		System.out.println (chatbot1.getGreeting());
+		statement = in.nextLine();
+		
+
+
+		while (statement.indexOf(bye)==-1)
+		{
+			System.out.println (chatbot1.getResponse(statement));
+			statement = in.nextLine();
+		}
+	 }
+	if(input.equals("3"))
+	{   String bye="bye";	
+		System.out.println (chatbot3.getGreeting());
+	    statement = in.nextLine();
+		
+
+
+		while (statement.indexOf(bye)==-1)
+		{
+			System.out.println (chatbot3.getResponse(statement));
+			statement = in.nextLine();
+		}
+	 }	  
+	else System.out.println("Please enter a valid response");
+	}
+	}
+	
 }
 
