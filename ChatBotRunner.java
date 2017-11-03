@@ -54,10 +54,10 @@ public class ChatBotRunner
 		}
 	  }
 	   	 
-	  if(input.indexOf("bye")>=0) 
+	  if(input.equals("bye")) 
 	  {System.out.println("bye");}
-	  else {System.out.println("I think our time is up for today. Enjoy the rest of your day. Bye!");}
+	  else {System.out.println("I'm sorry,that's not a valid response. Goodbye.");
 	  }
 }
-
+}
 
