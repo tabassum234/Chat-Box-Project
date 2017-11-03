@@ -13,10 +13,10 @@ public String getResponse(String statement)
  String name=retainName(statement);
   if(findKeyword(statement,"My name is")>=0)
   {response=name+",How may I help you today? By the way to undermine the sterotypical doctor-patient relationship, I'll call you broodie. Please respond in the format:'My problem is...'.";}
-  else if (statement.length()==0)
-   {response= "So, what seems to be the problem,"+name+"?";}
   else if(findKeyword(statement,"I feel")>=0)
   {transformIFeel(statement);}
+  else if (statement.length()==0)
+   {response= "So, what seems to be the problem,"+name+"?";}
   else if(statement.length()>=40)
   {response="Stay calm. Don't forget to breath. Speak simply.";}
   else if(findKeyword(statement,"My problem is")>=0)
@@ -125,15 +125,15 @@ private String retainName(String statement)
 private String retainProblem(String statement)
 //returns the problem specifically mentioned by the user when asking if the program can help.
 {   String problem="";
-	if (findKeyword(statement,"My problem is")>=0)
-	{problem=statement.substring(13);}
-	else if (findKeyword(statement,"Anxiety")>=0)
+     if (findKeyword(statement,"Anxiety")>=0)
 	{problem="what's on your mind?";}
-	else if (findKeyword(statement,"Depression")>=0)
+	else if (findKeyword(statement,"depression")>=0)
 	{problem="what's on your mind?";}
 	else if (findKeyword(statement,"love")>=0)
 	{transferChatChen(statement);}
 	else if (findKeyword(statement,"lonliness")>=0)
+	{transferChatChen(statement);}
+	else if (findKeyword(statement,"lonely")>=0)
 	{transferChatChen(statement);}
 	else if (findKeyword(statement,"boyfriend")>=0)
 	{transferChatChen(statement);}
@@ -147,6 +147,8 @@ private String retainProblem(String statement)
             {transferChatBhuiyan(statement);}
      else if (findKeyword(statement,"vomit")>=0)
                {transferChatBhuiyan(statement);}
+     else if (findKeyword(statement,"My problem is")>=0)
+ 	{problem=statement.substring(13);}
 	return problem;
 	
 }
@@ -195,20 +197,22 @@ if(input.equals("3"))
 		statement = in.nextLine();
 	}
  }	  
+if(statement.indexOf("bye")>=0)
+{System.out.println("bye");}
 else System.out.println("Please enter a valid response");
 }
 }
-private String transformIFeel(String statement)
-{String response="";
-   if ((findKeyword(statement,"I feel")>=0)&&(statement.indexOf("I feel")!=statement.length()-5))
+private void transformIFeel(String statement)
+{String transifeel="";
+   if ((findKeyword(statement,"I feel")>=0)&&(statement.indexOf("I feel")!=statement.length()-6))
   {int x=statement.indexOf("I feel");
- response="Why do you feel"+statement.substring(x+7)+"?"; 
+ transifeel="Why do you feel"+statement.substring(x+6)+"?"; 
   }
-   else if ((findKeyword(statement,"I feel")>=0)&&(statement.indexOf("I feel")==statement.length()-5))
+   else if ((findKeyword(statement,"I feel")>=0)&&(statement.indexOf("I feel")==statement.length()-6))
   {
-   response="Why do you feel that way?";
+   transifeel="Why do you feel that way?";
   }
-  return response;
+  System.out.println(transifeel);
 }
 
 

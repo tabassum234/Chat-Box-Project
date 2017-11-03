@@ -52,8 +52,12 @@ public class ChatBotRunner
 			System.out.println (chatbot3.getResponse(statement));
 			statement = in.nextLine();
 		}
-	   }	  
-	  else System.out.println("Please enter a valid response");
+	  }
+	   	 
+	  if(input.indexOf("bye")>=0) 
+	  {System.out.println("bye");}
+	  else {System.out.println("I think our time is up for today. Enjoy the rest of your day. Bye!");}
+	  }
 }
-}
+
 
